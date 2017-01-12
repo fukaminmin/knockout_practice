@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js"></script>
+</head>
+<body>
+  <strong>knockoutでobservableな配列を作ってみる</strong>
+  <p>observableにすると変数の変更を追跡してくれる。これは配列も同様である。</p>
+  <p>また、observableな配列にpushするとviewにも変更してくれる。同じく配列から削除すると同様にviewからも削除される</p>
+  <hr>
+  <ul id="jsKnockout">
+    <!-- ko foreach: sampleObservableArray -->
+      <li>
+        <span data-bind="text: $data"></span>
+        <button data-bind="click: $root.remove">削除</button>
+      </li>
+    <!-- /ko -->
+    <button data-bind="click: add">追加</button>
+  </ul>
+  <a href="step4.html">次へ</a>
+  <script>
+    var el = document.querySelector('#jsKnockout');
+
+    var ViewModel = function(){
+      var self = this;
+      this.sampleObservableArray = ko.observableArray(['ilst1', 'list2', 'list3', 'list4'])
+
+      this.add = function(){
+        this.sampleObservableArray.push(['list hoge'])
+      }
+
+      this.remove = function(data){
+        self.sampleObservableArray.remove(data)
+      }
+    }
+
+    var vm = new ViewModel()
+
+    ko.applyBindings(vm, el)
+  </script>
+</body>
+</html>

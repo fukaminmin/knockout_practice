@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.min.js"></script>
+</head>
+<body>
+  <strong>knockoutでobservableな配列を作ってみる③</strong>
+  <p>配列の一つ一つをオブジェクトにして、その中身を一つ一つ出すことも出来る</p>
+  <p>その中身を書き換えることも可能である</p>
+  <hr>
+  <ul id="jsKnockout">
+    <!-- ko foreach: sampleObservableArray -->
+      <li>
+        <span data-bind="text: name"></span>
+        <button data-bind="click: $root.doFollow, text: follow() ? 'フォローを外す' : 'フォローする'"></button>
+      </li>
+    <!-- /ko -->
+    <button data-bind="click: add">追加</button>
+  </ul>
+  <a href="kadai.html">課題へ</a>
+  <script>
+    var el = document.querySelector('#jsKnockout');
+    var followList = [
+      {name: 'fukami', follow: true},
+      {name: 'wataru', follow: false},
+      {name: 'hiromu', follow: true}
+    ]
+
+    var ViewModel = function(){
+      var self = this;
+      this.sampleObservableArray = ko.mapping.fromJS(followList)
+
+      this.doFollow = function(data){
+        console.log(data) // => consoleで見ると先ほどのstep4での出方と違う
+        var currentFollowStatus = data.follow();
+        data.follow(!currentFollowStatus)
+      }
+
+      this.add = function(){
+        self.sampleObservableArray.push(({name: ko.observable('numasawa'), follow: ko.observable(true)}))
+      }
+    }
+
+    var vm = new ViewModel()
+
+    ko.applyBindings(vm, el)
+  </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js"></script>
+</head>
+<body>
+  <strong>knockoutでobservableな変数を作ってみる</strong>
+  <p>次にjsのデータを変更したらviewのデータが勝手に変わることを確認するサンプル</p>
+  <p>observableとは「追跡する」という意味でjsの変数を変更したらviewも変わるということ（とおぼえてもいい）</p>
+  <hr>
+  <ul id="jsKnockout">
+    <li data-bind="text: sampleText"></li>
+    <li data-bind="text: sampleObservableText"></li>
+    <button data-bind="click: changeText">クリックしたら文字を変える</button>
+  </ul>
+  <a href="step3.html">次へ</a>
+  <script>
+    var el = document.querySelector('#jsKnockout');
+
+    var ViewModel = function(){
+      this.sampleText = 'はじめてのknockout';
+      this.sampleObservableText = ko.observable('ここは変わるテキスト')
+
+      this.changeText = function(){
+        this.sampleText = 'はじめてのテキストを書き換える'
+        this.sampleObservableText('はじめてのテキストを書き換える')
+        alert('ko.observable()で書いている方はviewが勝手に書き換わる')
+      }
+    }
+
+    var vm = new ViewModel()
+
+    ko.applyBindings(vm, el)
+  </script>
+</body>
+</html>

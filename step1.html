@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js"></script>
+
+  </script>
+</head>
+<body>
+  <strong>knockoutでテキストを表示してみる</strong>
+  <p>knockoutjsを使うと簡単にobservableなものを作ることが出来る</p>
+  <p>最初はjsのデータをDOMに反映してみよう</p>
+  <p>data-bind="text: hogehoge"のhogehogeの部分はjsだったらなんでも書ける（サンプルでは文字数を表示する）</p>
+  <hr>
+  <ul id="jsKnockout">
+    <li data-bind="text: sampleText"></li>
+    <li data-bind="text: sampleText.length + '文字'"></li>
+  </ul>
+  <a href="step2.html">次へ</a>
+  <script>
+    var el = document.querySelector('#jsKnockout');
+
+    var ViewModel = function(){
+      this.sampleText = 'はじめてのknockout';
+    }
+
+    var vm = new ViewModel()
+
+    ko.applyBindings(vm, el)
+  </script>
+</body>
+</html>
